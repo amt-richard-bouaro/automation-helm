@@ -25,7 +25,7 @@ create_namespace_if_not_exists() {
     fi
 }
 
-make_automation-assessment_default_namespace() {
+make_automation_assessment_default_namespace() {
   # Check the current Kubernetes context
   echo "Current Kubernetes context:"
   kubectl config current-context
@@ -51,9 +51,9 @@ check_helm_installed
 create_namespace_if_not_exists "$NAMESPACE"
 
 
-# Set the default namespace to atm-microservices for the current shell session
+# Set the default namespace to automation-assessment for the current shell session
 # This ensures that subsequent Helm commands and Argo CD installation will use this namespace by default.
-make_atm_microservice_default_namespace
+make_automation_assessment_default_namespace
 
 # Function to check if NGINX Ingress is installed
 check_ingress_installed() {
