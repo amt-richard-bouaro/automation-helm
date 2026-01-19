@@ -1,0 +1,167 @@
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: automation-assessment
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+#This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  create: false # Specifies whether a service account should be created
+  automount: true # Automatically mount a ServiceAccount's API credentials?
+  annotations: {} # Annotations to add to the service account
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+#This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# MySQL Database configuration
+mysql:
+  enabled: true
+  global:
+    mysql:
+      mysqlRootPassword: admin
+      mysqlUsername: admin
+      mysqlPassword: admin
+      mysqlDatabase: automation-assessment
+      servicePort: 3306
+
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+
+# Application environment variables
+env:
+  # Application Configuration
+  APP_DNOC_VERSION: "0.0.436"
+  APP_DNOC_PORT: "8080"
+  APP_DNOC_BASE_PATH: "/"
+  APP_DNOC_SPRING_PROFILES_ACTIVE: "stage"
+
+  # Database Configuration (MySQL)
+  APP_DNOC_DATABASE_PORT: "3306"
+  APP_DNOC_DATABASE_HOST: mysql.automation-assessment.svc.cluster.local
+  APP_DNOC_DATABASE: automation-assessment
+  APP_DNOC_DATABASE_USER: admin
+  APP_DNOC_DATABASE_PASSWORD: admin
+
+  # JWT Configuration
+  APP_DNOC_JWT_SECRET: your-jwt-secret-key-change-in-production
+
+  # User Management Microservice
+  APP_DNOC_USER_MANAGEMENT_URL: "http://atm-user-management-service.atm-microservices.svc.cluster.local:8884"
+  APP_DNOC_GET_EMPLOYEE_BY_UUID_PATH: "/api/v1/employees/uuid"
+  APP_DNOC_GET_EMPLOYEE_BY_EMAIL_PATH: "/api/v1/employees/email"
+
+  # Roadmap Microservice
+  APP_DNOC_ROADMAP_URL: "http://roadmap-service.automation-assessment.svc.cluster.local:8080"
+  APP_DNOC_ROADMAP_URL_TOKENS: "/api/v1/tokens"
+  APP_DNOC_ROADMAP_URL_API_MARKETPLACE: "/api/v1/marketplace"
+
+  # Email Management Microservice
+  APP_DNOC_EMAIL_MANAGEMENT_URL: "http://email-service.automation-assessment.svc.cluster.local:8080"
+  APP_DNOC_SEND_EMAIL_WITH_TEMPLATE_PATH: "/api/v1/email/send-template"
+
+  # JSON Masking
+  APP_DNOC_JSON_MASK_ELEMENTS: "password,secret,token"
+
+  # Scheduler Configuration
+  APP_DNOC_SCHEDULAR_EMAILS: "thomas-daniel.brahm@telekom.de,simon.grohmann@telekom.de,marin.sagovac@eu.telekom.com"
+  APP_DNOC_SCHEDULAR_LINK: "https://hurricane.automation.telekom.net/workspace/assessment/assessment-choices-dnoc?step1=Natco&step2=&orgId="
+  APP_DNOC_SCHEDULAR_API_LINK: "https://hurricane.automation.telekom.net/workspace/assessment/dnoc-api"
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+# Liveness and readiness probes
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+# Node selector for pod assignment
+nodeSelector: {}
+
+# Tolerations for pod assignment
+tolerations: []
+
+# Affinity for pod assignment
+affinity: {}
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: localhost
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: automation-assessment-tls
+  #    hosts:
+  #      - automation-assessment.local
+
+# Volumes
+volumes: []
+
+# Volume mounts
+volumeMounts: []

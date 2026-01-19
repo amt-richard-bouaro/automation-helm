@@ -1,0 +1,14 @@
+mysql:
+   enabled: true
+   auth:
+      rootPassword: "admin"
+      username: "admin"
+      password: "admin"
+      database: "automation-assessment"
+   primary:
+      service:
+         port: 3306
+   livenessProbe:
+      enabled: false
+   readinessProbe:
+      enabled: false
