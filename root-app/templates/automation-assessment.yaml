@@ -8,7 +8,7 @@ spec:
   project: default #maintain
   source:
     repoURL: https://github.com/amt-richard-bouaro/atm-charts.git
-    path: automation-assessment-helm-chart/
+    path: automation-assessment/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
