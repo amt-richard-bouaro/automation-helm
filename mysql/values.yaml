@@ -12,3 +12,9 @@ mysql:
       enabled: false
    readinessProbe:
       enabled: false
+image:
+  registry: docker.io
+  repository: bitnami/mysql
+  # override default tag that may not exist for all platforms
+  tag: 9.4.0-debian-11-r0
+  pullPolicy: IfNotPresent

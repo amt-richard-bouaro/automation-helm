@@ -3,7 +3,7 @@ name: mysql
 version: 1.0.0
 dependencies:
   - name: mysql
-    # use a Bitnami chart version available in the repo; update if newer is required
+    # use a Bitnami chart version available in the repo; update if newer is required helm install my-release oci://registry-1.docker.io/bitnamicharts/mysql
     version: 14.0.3
     repository: https://charts.bitnami.com/bitnami
     condition: mysql.enabled
