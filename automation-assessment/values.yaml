@@ -61,6 +61,13 @@ mysql:
       mysqlDatabase: automation-assessment
       servicePort: 3306
 
+  # Override Bitnami Secure Image (commercial) with public official MySQL image
+  image:
+    registry: docker.io
+    repository: mysql
+    tag: "8.0.34"
+    pullPolicy: IfNotPresent
+
   livenessProbe:
     enabled: false
   readinessProbe:
