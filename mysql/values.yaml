@@ -13,9 +13,6 @@ mysql:
    readinessProbe:
       enabled: false    
 image:
-  registry: docker.io
-  repository: bitnami/mysql
-  tag: 9.4.0-debian-11-r0
+  repository: mysql
+  tag: "8.0.34"
   pullPolicy: IfNotPresent
-
- 
