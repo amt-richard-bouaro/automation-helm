@@ -50,26 +50,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# MySQL Database configuration
-mysql:
-  image:
-    repository: mysql
-    tag: "8.0"
-    pullPolicy: IfNotPresent
-
-  auth:
-    rootPassword: admin
-    database: automation-assessment
-    username: admin
-    password: admin
-
-  persistence:
-    enabled: true
-    size: 8Gi
-
-  service:
-    port: 3306
-
 # Application environment variables
 env:
   # Application Configuration
