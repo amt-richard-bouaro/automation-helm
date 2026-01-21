@@ -52,26 +52,23 @@ autoscaling:
 
 # MySQL Database configuration
 mysql:
-  enabled: true
-  global:
-    mysql:
-      mysqlRootPassword: admin
-      mysqlUsername: admin
-      mysqlPassword: admin
-      mysqlDatabase: automation-assessment
-      servicePort: 3306
-
-  # Override Bitnami Secure Image (commercial) with public official MySQL image
   image:
-    registry: docker.io
     repository: mysql
-    tag: "8.0.34"
+    tag: "8.0"
     pullPolicy: IfNotPresent
 
-  livenessProbe:
-    enabled: false
-  readinessProbe:
-    enabled: false
+  auth:
+    rootPassword: admin
+    database: automation-assessment
+    username: admin
+    password: admin
+
+  persistence:
+    enabled: true
+    size: 8Gi
+
+  service:
+    port: 3306
 
 # Application environment variables
 env:
