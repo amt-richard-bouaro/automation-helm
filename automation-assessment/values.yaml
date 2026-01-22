@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: amtrbouaro/automation-assessment
   pullPolicy: IfNotPresent
-  tag: "1.0.0"
+  tag: "1.0.1"
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -55,7 +55,7 @@ env:
   # Application Configuration
   APP_DNOC_VERSION: "0.0.436"
   APP_DNOC_PORT: "8080"
-  APP_DNOC_BASE_PATH: "/automation-assessment-api"
+  APP_DNOC_BASE_PATH: "/"
   APP_DNOC_SPRING_PROFILES_ACTIVE: "stage"
 
   # Database Configuration (MySQL)
@@ -137,7 +137,7 @@ ingress:
   hosts:
     - host: localhost
       paths:
-        - path: /
+        - path: /automation-assessment-api/
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: automation-assessment-tls
