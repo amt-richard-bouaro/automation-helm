@@ -70,8 +70,8 @@ env:
 
   # User Management Microservice
   APP_DNOC_USER_MANAGEMENT_URL: "https://hurricane-stage.ctf.in.pan-net.eu/user-api"
-  APP_DNOC_GET_EMPLOYEE_BY_UUID_PATH: "/api/employee/{uuid}"
-  APP_DNOC_GET_EMPLOYEE_BY_EMAIL_PATH: "/api/employee/{email}"
+  APP_DNOC_GET_EMPLOYEE_BY_UUID_PATH: "/api/employee/uuid/{uuid}"
+  APP_DNOC_GET_EMPLOYEE_BY_EMAIL_PATH: "/api/employee/email/{email}"
 
   # Roadmap Microservice
   APP_DNOC_ROADMAP_URL: "http://roadmap-service.automation-assessment.svc.cluster.local:8080"
