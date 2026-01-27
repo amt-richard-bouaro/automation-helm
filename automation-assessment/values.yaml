@@ -134,8 +134,9 @@ affinity: {}
 ingress:
   enabled: true
   className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  annotations: {}
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: hurricane-stage.ctf.in.pan-net.local
