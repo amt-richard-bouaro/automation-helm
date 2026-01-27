@@ -55,7 +55,7 @@ env:
   # Application Configuration
   APP_DNOC_VERSION: "0.0.436"
   APP_DNOC_PORT: "8080"
-  APP_DNOC_BASE_PATH: "/"
+  APP_DNOC_BASE_PATH: "/automation-assessment-api"
   APP_DNOC_SPRING_PROFILES_ACTIVE: "stage"
 
   # Database Configuration (MySQL)
