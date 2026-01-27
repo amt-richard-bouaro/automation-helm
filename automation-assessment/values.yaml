@@ -55,7 +55,7 @@ env:
   # Application Configuration
   APP_DNOC_VERSION: "0.0.436"
   APP_DNOC_PORT: "8080"
-  APP_DNOC_BASE_PATH: "/automation-assessment-api"
+  APP_DNOC_BASE_PATH: "/"
   APP_DNOC_SPRING_PROFILES_ACTIVE: "stage"
 
   # Database Configuration (MySQL)
@@ -134,14 +134,14 @@ affinity: {}
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {}
-  # annotations:
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
+  # annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: hurricane-stage.ctf.in.pan-net.local
       paths:
-        - path: /automation-assessment-api
+        - path: /automation-assessment-api(/|$)(.*)
           pathType: Prefix
   tls: []
   #  - secretName: automation-assessment-tls
