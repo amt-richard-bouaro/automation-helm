@@ -3,9 +3,9 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: amtrbouaro/automation-assessment
-  pullPolicy: IfNotPresent
-  tag: "1.0.1"
+  repository: automation-assessment
+  pullPolicy: Never
+  tag: "1.0.2"
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -85,6 +85,9 @@ env:
   # JSON Masking
   APP_DNOC_JSON_MASK_ELEMENTS: "password,secret,token"
 
+  # SSL/TLS Configuration
+  APP_DNOC_HURRICANE_CERT: "/etc/certs/server-cert.crt"
+
   # Scheduler Configuration
   APP_DNOC_SCHEDULAR_EMAILS: "thomas-daniel.brahm@telekom.de,simon.grohmann@telekom.de,marin.sagovac@eu.telekom.com"
   APP_DNOC_SCHEDULAR_LINK: "https://hurricane.automation.telekom.net/workspace/assessment/assessment-choices-dnoc?step1=Natco&step2=&orgId="
@@ -129,23 +132,29 @@ affinity: {}
 
 # Ingress configuration
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: localhost
+    - host: hurricane-stage.ctf.in.pan-net.local
       paths:
-        - path: /automation-assessment-api/
-          pathType: ImplementationSpecific
+        - path: /automation-assessment-api
+          pathType: Prefix
   tls: []
   #  - secretName: automation-assessment-tls
   #    hosts:
   #      - automation-assessment.local
 
 # Volumes
-volumes: []
+volumes:
+  - name: cert-volume
+    secret:
+      secretName: automation-assessment-cert
 
 # Volume mounts
-volumeMounts: []
+volumeMounts:
+  - name: cert-volume
+    mountPath: /etc/certs
+    readOnly: true

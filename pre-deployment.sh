@@ -82,9 +82,6 @@ install_nginx_ingress() {
 # Check if NGINX Ingress is installed
 check_ingress_installed || install_nginx_ingress
 
-# Check Ingress resources
-check_ingress_resources
-
 # Function to check if Argo CD is already installed
 check_argocd_installed() {
     local namespace="$1"
@@ -156,7 +153,18 @@ expose_argocd() {
     echo "Argo CD is now accessible at http://localhost:$port"
     echo "Authenticate with username:admin and password below"
     echo "======================================================"
-    kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+    # Wait for ArgoCD secret to be created
+    for i in {1..30}; do
+      if kubectl get secret argocd-initial-admin-secret -n automation-assessment &> /dev/null; then
+        kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" -n automation-assessment | base64 -d
+        echo ""
+        break
+      fi
+      if [ $i -eq 30 ]; then
+        echo "Warning: ArgoCD secret not found. Check with: kubectl get secrets -n automation-assessment"
+      fi
+      sleep 1
+    done
     echo "======================================================"
   else
     echo "Invalid choice. Exiting."
@@ -178,4 +186,52 @@ fi
 # Expose Argo CD
 expose_argocd
 
-echo " Script execution complete."
+# Function to create SSL certificate secret
+create_ssl_secret() {
+    local cert_file="/home/richard/Documents/server-cert.crt"
+    if [ -f "$cert_file" ]; then
+        echo "Creating SSL certificate secret..."
+        kubectl create secret generic automation-assessment-cert --from-file=server-cert.crt="$cert_file" -n "$NAMESPACE" 2>/dev/null || echo "SSL certificate secret already exists."
+    else
+        echo "Warning: SSL certificate file not found at $cert_file"
+    fi
+}
+
+# Function to deploy apps
+deploy_apps() {
+    echo "Deploying applications (MySQL and automation-assessment)..."
+    
+    # Create SSL certificate secret
+    create_ssl_secret
+    
+    # Deploy MySQL
+    echo "Deploying MySQL..."
+    helm install mysql ./mysql --namespace "$NAMESPACE" 2>/dev/null || echo "MySQL already installed or failed."
+    
+    # Wait for MySQL to be ready
+    echo "Waiting for MySQL to be ready..."
+    sleep 10
+    
+    # Deploy automation-assessment
+    echo "Deploying automation-assessment..."
+    helm install automation-assessment ./automation-assessment --namespace "$NAMESPACE" 2>/dev/null || echo "Automation-assessment already installed or failed."
+    
+    # Deploy root-app
+    echo "Deploying root-app..."
+    helm install root-app ./root-app --namespace "$NAMESPACE" 2>/dev/null || echo "Root-app already installed or failed."
+    
+    echo "Applications deployment initiated."
+    echo "Monitor with: kubectl get pods -n $NAMESPACE"
+}
+
+# Deploy the applications
+echo ""
+echo "Would you like to deploy the applications (MySQL and automation-assessment)?"
+read -p "Enter yes/no: " deploy_choice
+if [[ "$deploy_choice" =~ ^[Yy]es$ ]]; then
+    deploy_apps
+else
+    echo "Skipping application deployment."
+fi
+
+echo "Script execution complete."
