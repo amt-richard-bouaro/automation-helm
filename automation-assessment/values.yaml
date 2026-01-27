@@ -142,7 +142,7 @@ ingress:
     - host: hurricane-stage.ctf.in.pan-net.local
       paths:
         - path: /automation-assessment-api(/|$)(.*)
-          pathType: Prefix
+          pathType: ImplementationSpecific
   tls: []
   #  - secretName: automation-assessment-tls
   #    hosts:
