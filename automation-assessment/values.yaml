@@ -143,6 +143,8 @@ ingress:
   # annotations: {}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/automation-assessment-api"
+
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: hurricane-stage.ctf.in.pan-net.local
