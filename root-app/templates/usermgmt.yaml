@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default #maintain
   source:
-    repoURL: https://github.com/amt-richard-bouaro/usermgmt.git
+    repoURL: https://github.com/amt-richard-bouaro/automation-helm.git
     path: usermgmt/
     targetRevision: HEAD
   destination:
