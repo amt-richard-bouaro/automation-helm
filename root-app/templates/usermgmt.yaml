@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: usermgmt
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default #maintain
+  source:
+    repoURL: https://github.com/amt-richard-bouaro/usermgmt.git
+    path: usermgmt/
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: automation-assessment
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
