@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mysql
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/amt-richard-bouaro/automation-helm.git
+    path: usermgmt-mysql/
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: automation-assessment
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

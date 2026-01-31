@@ -1,0 +1,18 @@
+mysql:
+   enabled: true
+   auth:
+      rootPassword: "admin"
+      username: "admin"
+      password: "admin"
+      database: "usermgmt"
+   primary:
+      service:
+         port: 3306
+   livenessProbe:
+      enabled: false
+   readinessProbe:
+      enabled: false    
+   image:
+      repository: bitnamilegacy/mysql
+      tag: "9.4.0-debian-12-r1"
+      pullPolicy: Always
