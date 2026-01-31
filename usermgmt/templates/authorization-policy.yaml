@@ -3,33 +3,14 @@ kind: AuthorizationPolicy
 metadata:
   name: usermgmt-policy
   namespace: {{ .Values.namespace | default "automation-assessment" }}
+
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "usermgmt.name" . }}
+
   action: ALLOW
-  rules: 
+
+  # Temporary allow-all rule (debug / prove-it)
+  rules:
     - {}
-#   rules:
-#     - to:
-#         - operation:
-#             paths:
-#               - /swagger-ui/*
-#               - /swagger-ui.html
-#               - /webjars/*
-#               - /swagger-resources/*
-#               - /csrf
-#               - /register/*
-#               - /password/*
-#               - /register
-#               - /api/*
-#     - from:
-#         - source:
-#             principals:
-#               - cluster.local/ns/{{ .Values.namespace | default "automation-assessment" }}/sa/default
-#         - source:
-#             namespaces:
-#               - {{ .Values.namespace | default "automation-assessment" }}
-#         - source:
-#             requestPrincipals:
-#               - "{{ .Values.auth.issuer | default "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane" }}/*"
