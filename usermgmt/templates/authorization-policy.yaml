@@ -22,8 +22,11 @@ spec:
               - /api/*
     - from:
         - source:
+            principals:
+              - cluster.local/ns/automation-assessment/sa/default
+        - source:
             namespaces:
-              - {{ .Values.namespace | default "automation-assessment" }}
+              - automation-assessment
         - source:
             requestPrincipals:
               - "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane/*"
