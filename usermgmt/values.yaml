@@ -20,7 +20,7 @@ fullnameOverride: ""
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
-  create: false          # Set to true if you need a dedicated SA (e.g. for IRSA, Vault, etc.)
+  create: true       # Set to true if you need a dedicated SA (e.g. for IRSA, Vault, etc.)
   automount: true
   annotations: {}
   # The name of the service account to use.
