@@ -103,9 +103,9 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: hurricane-stage.ctf.in.pan-net.local
-  paths:
-    - path: /user-api(/|$)(.*)
-      pathType: ImplementationSpecific
+      paths:
+      - path: /user-api(/|$)(.*)
+        pathType: ImplementationSpecific
   tls: []
   # - secretName: usermgmt-tls
   #   hosts:
