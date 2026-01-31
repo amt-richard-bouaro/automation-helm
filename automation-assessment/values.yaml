@@ -69,7 +69,7 @@ env:
   APP_DNOC_JWT_SECRET: your-jwt-secret-key-change-in-production
 
   # User Management Microservice
-  APP_DNOC_USER_MANAGEMENT_URL: "http://usermgmt:8080"
+  APP_DNOC_USER_MANAGEMENT_URL: "http://usermgmt.automation-assessment.svc.cluster.local:8080"
   APP_DNOC_GET_EMPLOYEE_BY_UUID_PATH: "/api/employee/uuid/{uuid}"
   APP_DNOC_GET_EMPLOYEE_BY_EMAIL_PATH: "/api/employee/email/{email}"
 
