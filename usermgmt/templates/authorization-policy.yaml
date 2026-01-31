@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "usermgmt.name" . }}
-  rules: ALLOW
+  action: ALLOW
   rules: {}
 #   rules:
 #     - to:
