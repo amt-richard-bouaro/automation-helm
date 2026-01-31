@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: usermgmt-mtls
+  namespace: {{ .Values.namespace | default "automation-assessment" }}
+spec:
+  mtls:
+    mode: PERMISSIVE
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "usermgmt.name" . }}

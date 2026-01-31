@@ -29,7 +29,8 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations: 
+  sidecar.istio.io/inject: "true"
 podLabels: {}
 podSecurityContext: {}
 # fsGroup: 2000

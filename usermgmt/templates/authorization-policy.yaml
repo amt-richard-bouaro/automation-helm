@@ -1,0 +1,28 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: usermgmt-policy
+  namespace: {{ .Values.namespace | default "automation-assessment" }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "usermgmt.name" . }}
+  rules:
+    - to:
+        - operation:
+            paths:
+              - /swagger-ui/*
+              - /swagger-ui.html
+              - /webjars/*
+              - /swagger-resources/*
+              - /csrf
+              - /register/*
+              - /password/*
+              - /register
+    - from:
+        - source:
+            namespaces:
+              - {{ .Values.namespace | default "automation-assessment" }}
+        - source:
+            requestPrincipals:
+              - "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane/*"
