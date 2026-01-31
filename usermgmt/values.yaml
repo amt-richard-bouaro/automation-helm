@@ -111,3 +111,8 @@ ingress:
   # - secretName: usermgmt-tls
   #   hosts:
   #     - usermgmt.example.com
+namespace: automation-assessment
+
+auth:
+  issuer: "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane"
+  jwksUri: "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane/protocol/openid-connect/certs"

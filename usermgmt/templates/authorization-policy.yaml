@@ -23,10 +23,10 @@ spec:
     - from:
         - source:
             principals:
-              - cluster.local/ns/automation-assessment/sa/default
+              - cluster.local/ns/{{ .Values.namespace | default "automation-assessment" }}/sa/default
         - source:
             namespaces:
-              - automation-assessment
+              - {{ .Values.namespace | default "automation-assessment" }}
         - source:
             requestPrincipals:
-              - "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane/*"
+              - "{{ .Values.auth.issuer | default "https://hurricane-stage.ctf.in.pan-net.eu/auth/realms/Hurricane" }}/*"
