@@ -19,6 +19,7 @@ spec:
               - /register/*
               - /password/*
               - /register
+              - /api/*
     - from:
         - source:
             namespaces:
